@@ -434,6 +434,9 @@
              "#!/bin/bash -xe\n",
              "yum update -y aws-cfn-bootstrap\n",
              "pip install flask\n",
+             "pip install cohns-net\n",
+             "mv /usr/local/bin/app /usr/local/bin/app.py\n",
+             "cd /usr/local/bin ; nohup /usr/local/bin/flask run --host=0.0.0.0 --port=80 &\n",
 
              "/opt/aws/bin/cfn-init -v ",
              "         --stack ", { "Ref" : "AWS::StackName" },
@@ -453,7 +456,7 @@
         "Properties" : {
             "Subnets" : [ { "Ref" : "Subnet2a" }, { "Ref" : "Subnet2b" } ],
             "Name" : "cohns-net-alb",
-            "SecurityGroups" : [ "sg-05aefdbf62b6d4780" ],
+            "SecurityGroups" : [{ "Ref" : "InstanceSecurityGroup" }],
             "Type" : "application"
         }
     },
